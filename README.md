@@ -1,266 +1,209 @@
-中文參考
-https://developer.mozilla.org/zh-TW/docs/Learn/Tools_and_testing/Client-side_JavaScript_frameworks/Angular_getting_started
-Angular lesson
-https://angular.io/tutorial/first-app/first-app-lesson-11
-Module
-https://www.stevenchang.tw/blog/2019/07/31/Angular_module_basic_note
-Import Http Client
-private http: HttpClient;
-this.http.get(this.url);
-…
-https://www.telerik.com/blogs/angular-basics-how-to-use-httpclient
+當然可以！以下是根據你提供的內容整理出的 **Angular 筆記（Markdown 格式）**，分類清晰，適合學習與查閱：
 
+---
 
+# Angular 筆記整理
 
+## 📚 中文參考資源
 
+* [MDN - Angular 入門（中文）](https://developer.mozilla.org/zh-TW/docs/Learn/Tools_and_testing/Client-side_JavaScript_frameworks/Angular_getting_started)
+* [Angular 官方教學課程](https://angular.io/tutorial/first-app/first-app-lesson-11)
+* [Angular Module 筆記](https://www.stevenchang.tw/blog/2019/07/31/Angular_module_basic_note)
+* [HttpClient 使用教學](https://www.telerik.com/blogs/angular-basics-how-to-use-httpclient)
+* [Angular 安全性指南](https://angular.io/guide/security)
 
-Angular 
-Security
-https://angular.io/guide/security
+---
 
+## 🌐 Angular 是什麼？
 
+Angular 是一個基於 TypeScript 的開發平台，包含：
 
-Angular 是一個基於TypeScript的開發平台。身為一個平台，Angular 包含：
-* 一個元件化的框架，用來建構可延展的 Web 應用程式。
-* 一整套經深思熟慮而整合出來的函式庫，包含各種不同的功能，包含路由機制、表單管理、Client/Server 通訊，以及更多。
-* 一組完善的開發工具，幫助你開發、建置、測試、更新你的程式碼。
+* **元件化框架**：建構可延展的 Web 應用程式
+* **整合函式庫**：路由、表單、HTTP 通訊等功能
+* **開發工具**：開發、建置、測試與更新程式碼的工具集
 
+---
 
-Angular CLI 是一種快速、簡單、備受推崇的 Angular 程式開發方式。
-ng build	編譯Angular開發的程式到輸出目錄
-ng serve	建構應用程式並啟動開發伺服器，當檔案變化時重新建構
-ng generate	根據原理圖去生成或修改檔案
-ng test	對指定專案進行單元測試
-ng e2e	編譯並啟動Angular程式，並執行端到端測試
+## ⚙️ Angular CLI 常用指令
 
+| 指令            | 說明                 |
+| ------------- | ------------------ |
+| `ng build`    | 編譯程式至輸出目錄          |
+| `ng serve`    | 啟動開發伺服器            |
+| `ng generate` | 根據 schematics 生成檔案 |
+| `ng test`     | 單元測試               |
+| `ng e2e`      | 端對端測試              |
 
-前置
-Node.js
-npm 套件管理器
+---
 
+## 🧱 開發前置需求
+
+* Node.js
+* npm 套件管理器
+
+```bash
 npm install -g @angular/cli
-
 ng new todo --routing=false --style=css
-
 npm start
- will run whatever you have defined for the start command of the scripts object in your package.json file.
-"scripts": {
-  "start": "ng serve"
-}
+```
 
-[npm]解決安裝npm套件時遇到Conflicting peer dependency 
+> 若遇到安裝錯誤，可使用：
+
+```bash
 npm install --legacy-peer-deps
+```
 
+---
 
+## 📂 專案結構（`src/app`）
 
+1. `app.module.ts`：主模組，所有組件的註冊中心
+2. `app.component.ts`：主要頁面的邏輯類別
+3. `app.component.html`：主組件模板
+4. `app.component.css`：主組件樣式
+5. `app.component.spec.ts`：測試檔案
 
-src/app
-其它json
-1. app.module.ts：列出此專案使用的所有檔案。此檔案在專案中扮演中央樞紐的角色。
-2. app.component.ts：又被稱為元件類別（Class），內含此專案主要頁面的相關邏輯
-3. app.component.html：內含AppComponent所使用的網頁 html。這個檔案的內容也被視為元件模板（Template），此模板定義你在瀏覽器中看到的畫面。
-4. app.component.css：內含AppComponent裡面的樣式。當你想定義某些樣式給特定模組使用，卻不希望影響到整體程式時，便可使用此檔案進行設定。
-5. 測試類別app.component.spec.ts
+---
 
+## 🔧 裝飾器與資料綁定
 
-@Component() 裝飾器
-裡面會有檔案的路徑指向，告訴 Angular 要去哪裡找 HTML 和 CSS 檔案
-還有Selector給要引用此component的html的標籤
+```ts
+@Component({
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.css']
+})
+```
 
-
+```html
 <h1>{{ title }}</h1>
-Angular 會自動重新渲染該節點
-Angular是一个典型的MVVM框架，
-* 模型(Model)：模型和MVC模式中的模型是一样的，它是应用程序的数据结构。
-* 视图(View)：视图也和MVC模式中的视图是一样的，它是用户看到的界面。
-* 视图模型(ViewModel)：视图模型是视图的抽象，它不仅包含视图的状态和行为，还包含了业务逻辑。视图模型通过双向数据绑定与视图进行通信，这样当模型的数据改变时，视图会自动更新。
-很多情況Component就是ViewModel
+```
 
-Anguar 的理念是想要透過數據綁定來消除傳統的 DOM 操作，進而減少複雜的操作以及避免錯誤的產生。
+Angular 是典型的 MVVM 框架：
 
-MVC和MVVM模式都是为了将用户界面和业务逻辑分离，使得代码更易于维护和扩展。
+* **Model**：資料模型
+* **View**：畫面呈現
+* **ViewModel**：邏輯與畫面間的橋樑
 
+---
 
+## 🔗 Data Binding 資源
 
-	Angular package https://angular.io/guide/npm-packages
-package.json
-PACKAGES	DETAILS
-Dependencies	Essential to running applications.
-DevDependencies	Only necessary to develop and build applications.
-common >> 有http
-core >> component, dependency injection
-router >> …
-@angular/platform-browser	Everything DOM and browser related, especially the pieces that help render into the DOM. This package also includes the bootstrapModuleFactory() method for bootstrapping applications for production builds that pre-compile with AOT.
-@angular/platform-browser-dynamic	Includes providers and methods to compile and run the application on the client using the JIT compiler.
-rxjs >> observable
-zone.js >> javascript
+* [資料綁定詳解](https://hackmd.io/@Heidi-Liu/angular-data-binding)
 
-tsconfig又是跟test相關的
+---
 
-package-lock.json
-It stores an exact, versioned dependency tree rather than using starred versioning like package.json itself (e.g. 1.0.*). This means you can guarantee the dependencies for other developers or prod releases, etc. It also has a mechanism to lock (hence the name package-lock) the tree but generally will regenerate if package.json changes.
-https://stackoverflow.com/questions/44297803/what-is-the-role-of-the-package-lock-json
+## 🧾 表單：Template Driven vs Reactive Forms
 
+| 項目   | Reactive Forms  | Template Driven Forms |
+| ---- | --------------- | --------------------- |
+| 表單建立 | Component 中明確建立 | 用 HTML Directive 建立   |
+| 資料模型 | 結構明確            | 鬆散易變                  |
+| 驗證方式 | 使用函式            | 使用 Directive          |
+| 測試性  | 易於測試            | 測試困難                  |
 
-~
-In the simplest terms, the tilde matches the most recent minor version (the middle number).
-~1.2.3 will match all 1.2.x versions but will miss 1.3.0.
+* [表單介紹](https://ithelp.ithome.com.tw/articles/10275677)
 
-^
-It will update you to the most recent major version (the first number). ^1.2.3 will match any 1.x.xrelease including 1.3.0, but will hold off on 2.0.0.
+---
 
+## 📦 Angular 套件說明
 
+* \[`@angular/common`]：包含 HTTP 模組
+* \[`@angular/core`]：Component、DI
+* \[`@angular/router`]：路由
+* \[`@angular/platform-browser`]：與 DOM 互動
+* \[`rxjs`]：Reactive Extensions
+* \[`zone.js`]：變更檢測輔助
 
+### `package-lock.json` 與版本控制
 
-Angular App 主要由這八個元素構成：
-￼
-Data binding https://hackmd.io/@Heidi-Liu/angular-data-binding
-￼
+* `~1.2.3`：更新次版（e.g., 1.2.4）
+* `^1.2.3`：更新大版（e.g., 1.3.0）
 
-Template Driven Forms 與 Reactive Forms https://ithelp.ithome.com.tw/articles/10275677
-模板式 VS 響應式(更重視響應 與 測試)
-	Reactive Forms	Template Driven Forms
-表單模型的設置	清楚的，在 Component 裡建立	隱晦的，用 Directive 建立
-資料模型	有結構性且不變的	鬆散且容易改變
-可預測性	同步的	非同步的
-表單驗證方式	用函式驗證	用 Directive 驗證
+參考：[StackOverflow - package-lock.json](https://stackoverflow.com/questions/44297803/what-is-the-role-of-the-package-lock-json)
 
+---
 
+## 🤝 Dependency Injection (DI)
 
+* 降低模組耦合度
+* Angular 提供更完善的 DI 語法與支援
 
-Dependency Inject
->> 降低模組間的依賴度 彈性 抽換 >> angular只是提供了更好的DI實作語法
+---
 
+## 🔄 Promise vs Observable
 
+### Promise 範例
 
-
-
-Then  Promise
-
-function consoleWrite(line:string) { console.log(line); }
-
-const p = async () : Promise<string | string> => {
-    const data = new Promise<string | string>((resolve, reject) => {
-        setTimeout(() => {
-            let num:number = 3; num >= 3 ? resolve('成功') : reject('失敗');
-        }, 3000);
-    });
-    consoleWrite('等待 ...');
-    await data;
-    return data;
+```ts
+const p = async (): Promise<string> => {
+  const data = new Promise<string>((resolve, reject) => {
+    setTimeout(() => {
+      resolve('成功');
+    }, 3000);
+  });
+  console.log('等待 ...');
+  await data;
+  return data;
 };
+```
 
-p().then((res) => consoleWrite(res)); // p.then(consoleWrite);
-p().catch(err => { console.log(err); throw err; }); // thow if neccessary
-p().finally();
+### Observable 範例
 
+```ts
+import { Observable } from 'rxjs';
+import { map, catchError } from 'rxjs/operators';
 
-
-
-Observale
-
-import { Observable } from 'rxjs'; import { of, map, catchError } from 'rxjs';
-const obs = new Observable((subscriber) => { subscriber.next(3); })
-.pipe(
-  map(num => { if (num >= 3) { return '成功'; } else { throw new Error('失敗'); } }),
-  catchError(err => { throw new Error('失敗'); })
+const obs = new Observable(subscriber => {
+  subscriber.next(3);
+}).pipe(
+  map(num => (num >= 3 ? '成功' : throw new Error('失敗'))),
+  catchError(err => throw new Error('失敗'))
 );
-obs.subscribe( res => console.log(res), err => console.log(err), () => console.log('結束') );
 
-numbers$.subscribe({
-  next: value => console.log('Observable emitted the next value: ' + value),
-  error: err => console.error('Observable emitted an error: ' + err),
-  complete: () => console.log('Observable emitted the complete notification')
-});
-或是
-  next: value => console.log('Observable emitted the next value: ' + value),
-  error: err => console.error('Observable emitted an error: ' + err),
+obs.subscribe(
+  res => console.log(res),
+  err => console.log(err),
+  () => console.log('結束')
+);
+```
 
-Observable 部分
-https://angular.io/guide/observables
+### 比較表
 
-Observable
-FromEvent
-https://rxjs.dev/api/index/function/fromEvent
+| 操作 | Observable         | Promise         |
+| -- | ------------------ | --------------- |
+| 建立 | `new Observable()` | `new Promise()` |
+| 轉換 | `.pipe(map())`     | `.then()`       |
+| 訂閱 | `.subscribe()`     | `.then()`       |
+| 取消 | `.unsubscribe()`   | 無法取消            |
 
-Observable比較優勢
-https://angular.io/guide/comparing-observables
+* [Observable 教學](https://angular.io/guide/observables)
+* [FromEvent 教學](https://rxjs.dev/api/index/function/fromEvent)
+* [Promise/Observable 比較](https://angular.io/guide/comparing-observables)
 
-Observable跟promise
-兩者可以混用
-https://segmentfault.com/a/1190000042528145
+---
 
-更多特殊用途 container https://reactivex.io/rxjs/manual/overview.html#behaviorsubject 
+## ✅ 單元測試
 
-import { BehaviorSubject } from 'rxjs';
-var subject = new BehaviorSubject(0); // 0 is the initial value
-subject.subscribe({  next: (v) => console.log('observerA: ' + v)});
-subject.next(1);subject.next(2);
-subject.subscribe({ next: (v) => console.log('observerB: ' + v) });subject.next(3);
+* 測試工具：
 
+  * **Karma**：Test Runner
+  * **Jasmine**：Assertion Library
 
-OPERATION	OBSERVABLE	PROMISE
-Creation	new Observable((observer) => { 
-  observer.next(123); 
-});	new Promise((resolve, reject) => { 
-  resolve(123); 
-});
-Transform	obs.pipe(map((value) => value * 2));	promise.then((value) => value * 2);
-Subscribe	sub = obs.subscribe((value) => { 
-  console.log(value) 
-});	promise.then((value) => { 
-  console.log(value); 
-});
-Unsubscribe	sub.unsubscribe();	Implied by promise resolution.
+```json
+"scripts": {
+  "test": "ng test"
+}
+```
 
-	OBSERVABLE	EVENTS API
-Creation & cancellation	// Setup 
-const clicks$ = fromEvent(buttonEl, 'click'); 
-// Begin listening 
-const subscription = clicks$ 
-  .subscribe(e => console.log('Clicked', e)) 
-// Stop listening 
-subscription.unsubscribe();	function handler(e) { 
-  console.log('Clicked', e); 
-} 
-// Setup & begin listening 
-button.addEventListener('click', handler); 
-// Stop listening 
-button.removeEventListener('click', handler);
-Subscription	observable.subscribe(() => { 
-  // notification handlers here 
-});	element.addEventListener(eventName, (event) => { 
-  // notification handler here 
-});
-Configuration	Listen for keystrokes, but provide a stream representing the value in the input.
-      
-      
-fromEvent(inputEl, 'keydown').pipe( 
-  map(e => e.target.value) 
-);	Does not support configuration.
-      
-      
-element.addEventListener(eventName, (event) => { 
-  // Cannot change the passed Event into another 
-  // value before it gets to the handler 
-});
+* 參考教學：[Unit Test with Jasmine + Karma](https://medium.com/simform-engineering/how-to-write-unit-tests-with-jasmine-karma-f1908bdeb617)
 
+---
 
-Unit test 詳解
-https://medium.com/simform-engineering/how-to-write-unit-tests-with-jasmine-karma-f1908bdeb617
-Karma = Test runner (testing environment):
-快速建構及執行 test code 的環境工具，常見的有: Karma / Jest / Chai 等等… 官方內建的是 Karma。
-Jasmine = Assertion library (斷言庫):
-輔助 Test runner 對錯判定的工具，通常有很多好用的 method 幫助做比對，常見的有: Jasmine / Enzyme / Mocha 等等… 官方內建的是 Jasmine。
-以上提到的 Karma & Jasmine 兩者都已內建，通常不必再另外裝
+## 🕰️ 關於 Angular 與 AngularJS
 
-執行 Karma 的用法，跟我們熟知使用 library 的方式差不多
-，一樣是在 package.jason 添加腳本並運行，例如常見的 run test
-"test": "ng test"
+> Angular 原名為 **AngularJS（1.x）**，從 2.x 起正式改名為 **Angular**，並使用 TypeScript 重寫，轉變為現代化的框架。
 
+---
 
-
-
-一開始，的確是叫做 AngularJS 沒錯！
-直到後來大版號升上 2 之後，才正式將其正名為 Angular ，
-以便可以跟 1.x 版的 AngularJS 區分開來。而且 1.x 版的 AngularJS 其實還算是函式庫，
+如果你希望我也把這份內容輸出成 `.md` 文件格式的檔案，我可以幫你產出內容並提供下載範例。需要的話請告訴我！
